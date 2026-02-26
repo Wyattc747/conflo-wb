@@ -1,0 +1,171 @@
+export enum PermissionLevel {
+  OWNER_ADMIN = 'OWNER_ADMIN',
+  PRE_CONSTRUCTION = 'PRE_CONSTRUCTION',
+  MANAGEMENT = 'MANAGEMENT',
+  USER = 'USER',
+}
+
+export enum ProjectPhase {
+  BIDDING = 'BIDDING',
+  BUYOUT = 'BUYOUT',
+  ACTIVE = 'ACTIVE',
+  CLOSEOUT = 'CLOSEOUT',
+  CLOSED = 'CLOSED',
+}
+
+export enum ProjectType {
+  COMMERCIAL = 'COMMERCIAL',
+  INSTITUTIONAL = 'INSTITUTIONAL',
+  HEALTHCARE = 'HEALTHCARE',
+  EDUCATION = 'EDUCATION',
+  INDUSTRIAL = 'INDUSTRIAL',
+  RESIDENTIAL_MULTI = 'RESIDENTIAL_MULTI',
+  MIXED_USE = 'MIXED_USE',
+  OTHER = 'OTHER',
+}
+
+export enum UserStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  INVITED = 'INVITED',
+}
+
+export enum AssigneeType {
+  GC_USER = 'GC_USER',
+  SUB_COMPANY = 'SUB_COMPANY',
+  OWNER_ACCOUNT = 'OWNER_ACCOUNT',
+}
+
+export enum ContactCategory {
+  SUBCONTRACTOR = 'SUBCONTRACTOR',
+  OWNER_CLIENT = 'OWNER_CLIENT',
+  ARCHITECT_ENGINEER = 'ARCHITECT_ENGINEER',
+  VENDOR = 'VENDOR',
+  OTHER = 'OTHER',
+}
+
+export enum SubscriptionTier {
+  STARTER = 'STARTER',
+  PROFESSIONAL = 'PROFESSIONAL',
+  SCALE = 'SCALE',
+  ENTERPRISE = 'ENTERPRISE',
+}
+
+export enum SubscriptionStatus {
+  ACTIVE = 'ACTIVE',
+  PAST_DUE = 'PAST_DUE',
+  CANCELLED = 'CANCELLED',
+  TRIALING = 'TRIALING',
+}
+
+export enum DailyLogStatus {
+  DRAFT = 'DRAFT',
+  SUBMITTED = 'SUBMITTED',
+}
+
+export enum RfiStatus {
+  DRAFT = 'DRAFT',
+  OPEN = 'OPEN',
+  RESPONDED = 'RESPONDED',
+  CLOSED = 'CLOSED',
+}
+
+export enum SubmittalStatus {
+  DRAFT = 'DRAFT',
+  SUBMITTED = 'SUBMITTED',
+  UNDER_REVIEW = 'UNDER_REVIEW',
+  APPROVED = 'APPROVED',
+  APPROVED_AS_NOTED = 'APPROVED_AS_NOTED',
+  REVISE_AND_RESUBMIT = 'REVISE_AND_RESUBMIT',
+  REJECTED = 'REJECTED',
+}
+
+export enum TransmittalStatus {
+  SENT = 'SENT',
+  ACKNOWLEDGED = 'ACKNOWLEDGED',
+}
+
+export enum ChangeOrderStatus {
+  DRAFT = 'DRAFT',
+  PENDING_SUB_PRICING = 'PENDING_SUB_PRICING',
+  SUB_PRICING_RECEIVED = 'SUB_PRICING_RECEIVED',
+  PENDING_OWNER = 'PENDING_OWNER',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+  REVISION = 'REVISION',
+}
+
+export enum PunchListStatus {
+  OPEN = 'OPEN',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED_BY_SUB = 'COMPLETED_BY_SUB',
+  VERIFIED_BY_GC = 'VERIFIED_BY_GC',
+  CLOSED = 'CLOSED',
+}
+
+export enum InspectionStatus {
+  SCHEDULED = 'SCHEDULED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+}
+
+export enum PayAppStatus {
+  DRAFT = 'DRAFT',
+  SUBMITTED = 'SUBMITTED',
+  UNDER_REVIEW = 'UNDER_REVIEW',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+  REVISION = 'REVISION',
+}
+
+export enum BidPackageStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+  CLOSED = 'CLOSED',
+  AWARDED = 'AWARDED',
+}
+
+export enum MeetingStatus {
+  SCHEDULED = 'SCHEDULED',
+  COMPLETED = 'COMPLETED',
+}
+
+export enum TodoStatus {
+  TODO = 'TODO',
+  IN_PROGRESS = 'IN_PROGRESS',
+  DONE = 'DONE',
+}
+
+export enum ProcurementStatus {
+  IDENTIFIED = 'IDENTIFIED',
+  QUOTED = 'QUOTED',
+  ORDERED = 'ORDERED',
+  SHIPPED = 'SHIPPED',
+  DELIVERED = 'DELIVERED',
+  INSTALLED = 'INSTALLED',
+}
+
+export enum InvitationStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  EXPIRED = 'EXPIRED',
+}
+
+export enum ChangeOrderType {
+  PCO = 'PCO',
+  CO = 'CO',
+}
+
+export enum AuthorType {
+  GC_USER = 'GC_USER',
+  SUB_USER = 'SUB_USER',
+  OWNER_USER = 'OWNER_USER',
+}
+
+export enum Priority {
+  LOW = 'LOW',
+  NORMAL = 'NORMAL',
+  HIGH = 'HIGH',
+  URGENT = 'URGENT',
+}
