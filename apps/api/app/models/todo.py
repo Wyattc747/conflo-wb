@@ -35,12 +35,26 @@ class Todo(Base):
     priority: Mapped[str] = mapped_column(
         String(20), nullable=False, server_default=text("'NORMAL'")
     )
+    category: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    cost_code_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
+    source_type: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    source_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
     status: Mapped[str] = mapped_column(
-        String(20), nullable=False, server_default=text("'TODO'")
+        String(20), nullable=False, server_default=text("'OPEN'")
+    )
+    completed_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )
     created_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()")
     )
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )

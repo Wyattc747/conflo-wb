@@ -1,8 +1,9 @@
 import uuid
 from datetime import datetime
+from decimal import Decimal
 from typing import Optional
 
-from sqlalchemy import ForeignKey, Integer, String, Text, text
+from sqlalchemy import ForeignKey, Integer, Numeric, String, Text, text
 from sqlalchemy.dialects.postgresql import JSONB, TIMESTAMP, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -27,11 +28,22 @@ class BidPackage(Base):
     number: Mapped[int] = mapped_column(Integer, nullable=False)
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    trade: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     trades: Mapped[list] = mapped_column(
         JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
     bid_due_date: Mapped[Optional[datetime]] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
+    )
+    pre_bid_meeting_date: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
+    estimated_value: Mapped[Optional[Decimal]] = mapped_column(
+        Numeric(15, 2), nullable=True
+    )
+    requirements: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    scope_documents: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
     invited_sub_ids: Mapped[list] = mapped_column(
         JSONB, nullable=False, server_default=text("'[]'::jsonb")
@@ -50,4 +62,7 @@ class BidPackage(Base):
     )
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )

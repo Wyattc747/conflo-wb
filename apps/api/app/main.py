@@ -55,6 +55,14 @@ from app.routers.transmittals import gc_router as transmittals_gc_router
 from app.routers.punch_list import gc_router as punch_gc_router, sub_router as punch_sub_router, owner_router as punch_owner_router
 from app.routers.inspections import gc_router as inspections_gc_router, template_router as inspection_templates_router
 from app.routers.schedule import gc_router as schedule_gc_router, sub_router as schedule_sub_router, owner_router as schedule_owner_router
+# Sprint 8
+from app.routers.meetings import gc_router as meetings_gc_router
+from app.routers.todos import gc_router as todos_gc_router, sub_router as todos_sub_router
+from app.routers.procurement import gc_router as procurement_gc_router
+from app.routers.drawings import gc_router as drawings_gc_router, sub_router as drawings_sub_router, owner_router as drawings_owner_router
+from app.routers.documents import gc_router as documents_gc_router, sub_router as documents_sub_router
+from app.routers.photos import gc_router as photos_gc_router, sub_router as photos_sub_router
+from app.routers.bids import gc_router as bids_gc_router, sub_router as bids_sub_router
 
 app.include_router(projects_router)
 app.include_router(assignments_router)
@@ -87,3 +95,17 @@ app.include_router(inspections_gc_router)
 app.include_router(schedule_gc_router)
 app.include_router(schedule_sub_router)
 app.include_router(schedule_owner_router)
+# Sprint 8
+app.include_router(meetings_gc_router)
+app.include_router(todos_gc_router)
+app.include_router(todos_sub_router)
+app.include_router(procurement_gc_router)
+app.include_router(drawings_gc_router)
+app.include_router(drawings_sub_router)
+app.include_router(drawings_owner_router)
+app.include_router(documents_gc_router)
+app.include_router(documents_sub_router)
+app.include_router(photos_gc_router)
+app.include_router(photos_sub_router)
+app.include_router(bids_gc_router)
+app.include_router(bids_sub_router)

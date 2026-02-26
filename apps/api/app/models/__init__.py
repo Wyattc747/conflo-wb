@@ -25,6 +25,7 @@ from app.models.meeting import Meeting
 from app.models.todo import Todo
 from app.models.procurement_item import ProcurementItem
 from app.models.document import Document
+from app.models.document_folder import DocumentFolder
 from app.models.comment import Comment
 from app.models.file import File
 from app.models.photo import Photo
@@ -43,7 +44,7 @@ __all__ = [
     "ChangeOrder", "PunchListItem", "Inspection", "InspectionTemplate",
     "PayApp", "BidPackage", "BidSubmission", "ScheduleTask",
     "Drawing", "DrawingSheet", "Meeting", "Todo", "ProcurementItem",
-    "Document", "Comment", "File", "Photo", "Notification",
+    "Document", "DocumentFolder", "Comment", "File", "Photo", "Notification",
     "EventLog", "AuditLog", "CostCodeTemplate", "Invitation",
     "IntegrationConnection", "BudgetLineItem",
 ]

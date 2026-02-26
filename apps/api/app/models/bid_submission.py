@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Optional
 
-from sqlalchemy import ForeignKey, Numeric, Text, text
+from sqlalchemy import ForeignKey, Integer, Numeric, String, Text, text
 from sqlalchemy.dialects.postgresql import JSONB, TIMESTAMP, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -29,8 +29,17 @@ class BidSubmission(Base):
         JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
     qualifications: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    submitted_at: Mapped[datetime] = mapped_column(
-        TIMESTAMP(timezone=True), server_default=text("now()")
+    schedule_duration_days: Mapped[Optional[int]] = mapped_column(
+        Integer, nullable=True
+    )
+    exclusions: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    inclusions: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    status: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default=text("'DRAFT'")
+    )
+    submitted_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )
     created_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()")
