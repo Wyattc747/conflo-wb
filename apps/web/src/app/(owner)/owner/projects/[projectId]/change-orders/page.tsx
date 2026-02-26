@@ -1,8 +1,18 @@
-export default function ChangeOrdersPage() {
+"use client";
+
+import { FileText } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { EmptyState } from "@/components/shared/EmptyState";
+
+export default function OwnerChangeOrdersPage() {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Change Orders</h1>
-      <p className="text-gray-500 mt-2">Coming soon</p>
+    <div>
+      <PageHeader title="Change Orders" subtitle="Review and approve change orders" />
+      <EmptyState
+        icon={FileText}
+        title="No change orders yet"
+        description="Change orders will appear here when submitted by the GC for your approval."
+      />
     </div>
   );
 }

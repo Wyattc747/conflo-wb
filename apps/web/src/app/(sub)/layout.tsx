@@ -1,19 +1,33 @@
+"use client";
+
+import { SubTopBar } from "@/components/sub/SubTopBar";
+import { SubSidebar } from "@/components/sub/SubSidebar";
+import { MobileMenu } from "@/components/shared/MobileMenu";
+import { usePathname } from "next/navigation";
+
+const SUB_NAV_ITEMS = [
+  { label: "Dashboard", href: "/sub/dashboard" },
+  { label: "Projects", href: "/sub/projects" },
+  { label: "Bids", href: "/sub/bids" },
+  { label: "Financials", href: "/sub/financials" },
+  { label: "Company", href: "/sub/company" },
+];
+
 export default function SubLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  // Detect if inside a project
+  const projectMatch = pathname.match(/\/sub\/projects\/([^/]+)/);
+  const projectId = projectMatch?.[1];
+  const isInProject = projectId && pathname !== "/sub/projects";
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Sub Portal Shell: top bar + sidebar — placeholder */}
-      <div className="flex">
-        <aside className="w-64 min-h-screen bg-primary text-white p-4">
-          <div className="text-xl font-bold mb-8">Conflo — Sub Portal</div>
-          <nav className="space-y-2 text-sm text-gray-300">
-            <p>Dashboard</p>
-            <p>Projects</p>
-            <p>Bids</p>
-            <p>Financials</p>
-            <p>Company</p>
-          </nav>
-        </aside>
-        <main className="flex-1">{children}</main>
+    <div className="min-h-screen bg-gray-100">
+      <SubTopBar />
+      <MobileMenu navItems={SUB_NAV_ITEMS} />
+      <div className="pt-14 flex">
+        <SubSidebar projectId={isInProject ? projectId : undefined} />
+        <main className="flex-1 md:ml-[180px] p-6 pb-20 md:pb-6">{children}</main>
       </div>
     </div>
   );

@@ -1,8 +1,21 @@
+"use client";
+
+import { Eye } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { EmptyState } from "@/components/shared/EmptyState";
+
 export default function LookAheadPage() {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Look Ahead</h1>
-      <p className="text-gray-500 mt-2">Coming soon</p>
+    <div>
+      <PageHeader
+        title="Look Ahead"
+        subtitle="View upcoming milestones and deadlines"
+      />
+      <EmptyState
+        icon={Eye}
+        title="No upcoming items"
+        description="Upcoming tasks, deadlines, and milestones will appear here as you add project data."
+      />
     </div>
   );
 }

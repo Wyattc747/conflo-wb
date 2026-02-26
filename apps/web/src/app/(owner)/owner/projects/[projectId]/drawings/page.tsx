@@ -1,8 +1,18 @@
-export default function DrawingsPage() {
+"use client";
+
+import { PenTool } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { EmptyState } from "@/components/shared/EmptyState";
+
+export default function OwnerDrawingsPage() {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Drawings</h1>
-      <p className="text-gray-500 mt-2">Coming soon</p>
+    <div>
+      <PageHeader title="Drawings" subtitle="View and download project drawings" />
+      <EmptyState
+        icon={PenTool}
+        title="No drawings yet"
+        description="Drawings will appear here when uploaded by the GC."
+      />
     </div>
   );
 }

@@ -1,8 +1,18 @@
-export default function FinancialsPage() {
+"use client";
+
+import { DollarSign } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { EmptyState } from "@/components/shared/EmptyState";
+
+export default function SubFinancialsPage() {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Financials</h1>
-      <p className="text-gray-500 mt-2">Coming soon</p>
+    <div>
+      <PageHeader title="Financials" subtitle="Track pay applications and change orders across projects" />
+      <EmptyState
+        icon={DollarSign}
+        title="No financial data yet"
+        description="Pay applications and change orders will appear here as they are created."
+      />
     </div>
   );
 }

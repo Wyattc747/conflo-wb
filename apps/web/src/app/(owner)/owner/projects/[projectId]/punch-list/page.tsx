@@ -1,8 +1,18 @@
-export default function PunchListPage() {
+"use client";
+
+import { Wrench } from "lucide-react";
+import { PageHeader } from "@/components/shared/PageHeader";
+import { EmptyState } from "@/components/shared/EmptyState";
+
+export default function OwnerPunchListPage() {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Punch List</h1>
-      <p className="text-gray-500 mt-2">Coming soon</p>
+    <div>
+      <PageHeader title="Punch List" subtitle="View and track punch list items" />
+      <EmptyState
+        icon={Wrench}
+        title="No punch list items yet"
+        description="Punch list items will appear here as they are created by the project team."
+      />
     </div>
   );
 }

@@ -1,8 +1,5 @@
-export default function SubDashboardPage() {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Sub Dashboard</h1>
-      <p className="text-gray-500 mt-2">Coming soon</p>
-    </div>
-  );
+import { redirect } from "next/navigation";
+
+export default function SubRootPage() {
+  redirect("/sub/dashboard");
 }
