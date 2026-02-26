@@ -44,6 +44,9 @@ from app.routers.webhooks import router as webhooks_router
 from app.routers.auth import router as auth_router
 from app.routers.invitations import router as invitations_router
 from app.routers.onboarding import router as onboarding_router
+from app.routers.daily_logs import router as daily_logs_router
+from app.routers.rfis import gc_router as rfis_gc_router, sub_router as rfis_sub_router
+from app.routers.comments import gc_router as comments_gc_router, sub_router as comments_sub_router
 
 app.include_router(projects_router)
 app.include_router(assignments_router)
@@ -52,3 +55,8 @@ app.include_router(webhooks_router)
 app.include_router(auth_router)
 app.include_router(invitations_router)
 app.include_router(onboarding_router)
+app.include_router(daily_logs_router)
+app.include_router(rfis_gc_router)
+app.include_router(rfis_sub_router)
+app.include_router(comments_gc_router)
+app.include_router(comments_sub_router)
