@@ -47,6 +47,9 @@ from app.routers.onboarding import router as onboarding_router
 from app.routers.daily_logs import router as daily_logs_router
 from app.routers.rfis import gc_router as rfis_gc_router, sub_router as rfis_sub_router
 from app.routers.comments import gc_router as comments_gc_router, sub_router as comments_sub_router
+from app.routers.budget import router as budget_router
+from app.routers.pay_apps import gc_router as pay_apps_gc_router, sub_router as pay_apps_sub_router, owner_router as pay_apps_owner_router
+from app.routers.change_orders import gc_router as cos_gc_router, sub_router as cos_sub_router, owner_router as cos_owner_router
 
 app.include_router(projects_router)
 app.include_router(assignments_router)
@@ -60,3 +63,10 @@ app.include_router(rfis_gc_router)
 app.include_router(rfis_sub_router)
 app.include_router(comments_gc_router)
 app.include_router(comments_sub_router)
+app.include_router(budget_router)
+app.include_router(pay_apps_gc_router)
+app.include_router(pay_apps_sub_router)
+app.include_router(pay_apps_owner_router)
+app.include_router(cos_gc_router)
+app.include_router(cos_sub_router)
+app.include_router(cos_owner_router)
