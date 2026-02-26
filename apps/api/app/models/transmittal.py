@@ -26,15 +26,43 @@ class Transmittal(Base):
     )
     number: Mapped[int] = mapped_column(Integer, nullable=False)
     subject: Mapped[str] = mapped_column(String, nullable=False)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+    # Recipient
+    to_company: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    to_contact: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    to_email: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     to_contact_ids: Mapped[list] = mapped_column(
         JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
-    action_required: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    status: Mapped[str] = mapped_column(
-        String(20), nullable=False, server_default=text("'SENT'")
+
+    # Sender
+    from_company: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    from_contact: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    # Transmittal details
+    purpose: Mapped[str] = mapped_column(
+        String(30), nullable=False, server_default=text("'FOR_REVIEW'")
     )
+    action_required: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    items: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    sent_via: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default=text("'CONFLO'")
+    )
+    due_date: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
+
+    status: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default=text("'DRAFT'")
+    )
+    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     sent_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
+    received_at: Mapped[Optional[datetime]] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
     created_at: Mapped[datetime] = mapped_column(
@@ -42,4 +70,7 @@ class Transmittal(Base):
     )
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )

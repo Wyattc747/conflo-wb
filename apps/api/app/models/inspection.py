@@ -26,28 +26,57 @@ class Inspection(Base):
     )
     number: Mapped[int] = mapped_column(Integer, nullable=False)
     title: Mapped[str] = mapped_column(String, nullable=False)
+
+    # Template
     template_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("inspection_templates.id"), nullable=True
     )
-    form_data: Mapped[dict] = mapped_column(
-        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    category: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default=text("'GENERAL'")
     )
-    inspector_user_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id"), nullable=True
-    )
+
+    # Scheduling
     scheduled_date: Mapped[Optional[datetime]] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    completed_date: Mapped[Optional[datetime]] = mapped_column(
-        TIMESTAMP(timezone=True), nullable=True
+    scheduled_time: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    location: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    # Inspector
+    inspector_user_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=True
     )
+    inspector_name: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    inspector_company: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    # Form data and results
+    form_data: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
+    checklist_results: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+    overall_result: Mapped[Optional[str]] = mapped_column(
+        String(20), nullable=True
+    )
+    photo_ids: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
+    )
+
+    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(
         String(20), nullable=False, server_default=text("'SCHEDULED'")
     )
-    notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+
+    completed_date: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
     created_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()")
     )
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, CalendarClock, Plus, Trash2 } from "lucide-react";
 import { Card } from "@/components/shared/Card";
 
 const WEATHER_CONDITIONS = ["Sunny", "Partly Cloudy", "Cloudy", "Overcast", "Rain", "Snow", "Wind", "Fog"];
@@ -11,6 +11,18 @@ const TRADES = [
   "Doors/Windows", "Finishes", "Plumbing", "HVAC", "Electrical", "Fire Protection", "Low Voltage",
   "Earthwork", "Paving", "Landscaping", "Demolition", "Other",
 ];
+const DELAY_REASONS = [
+  "WEATHER", "OWNER_CHANGE", "DESIGN_ERROR", "PERMITTING", "MATERIAL_DELIVERY",
+  "LABOR_SHORTAGE", "UNFORESEEN_CONDITIONS", "SUB_CAUSED", "FORCE_MAJEURE", "OTHER",
+];
+const RESPONSIBLE_PARTIES = ["GC", "OWNER", "SUB", "AE", "OTHER"];
+
+type ScheduleDelayEntry = {
+  delay_days: number;
+  reason_category: string;
+  responsible_party: string;
+  description: string;
+};
 
 export default function NewDailyLogPage() {
   const params = useParams();
@@ -23,6 +35,7 @@ export default function NewDailyLogPage() {
   const [tempLow, setTempLow] = useState("");
   const [workPerformed, setWorkPerformed] = useState("");
   const [delays, setDelays] = useState("");
+  const [scheduleDelays, setScheduleDelays] = useState<ScheduleDelayEntry[]>([]);
   const [manpower, setManpower] = useState<{ trade: string; workers: number; hours: number }[]>([]);
 
   const addManpowerRow = () => {
@@ -42,6 +55,20 @@ export default function NewDailyLogPage() {
   const totalWorkers = manpower.reduce((sum, m) => sum + (m.workers || 0), 0);
   const totalHours = manpower.reduce((sum, m) => sum + (m.hours || 0), 0);
 
+  const addScheduleDelay = () => {
+    setScheduleDelays([...scheduleDelays, { delay_days: 1, reason_category: "", responsible_party: "", description: "" }]);
+  };
+
+  const updateScheduleDelay = (idx: number, field: string, value: any) => {
+    const updated = [...scheduleDelays];
+    (updated[idx] as any)[field] = value;
+    setScheduleDelays(updated);
+  };
+
+  const removeScheduleDelay = (idx: number) => {
+    setScheduleDelays(scheduleDelays.filter((_, i) => i !== idx));
+  };
+
   const handleSave = (asDraft: boolean) => {
     // TODO: Wire to API via useCreateDailyLog hook
     console.log({
@@ -51,6 +78,7 @@ export default function NewDailyLogPage() {
       temp_low: tempLow ? Number(tempLow) : undefined,
       work_performed: workPerformed,
       delays,
+      schedule_delays: scheduleDelays.filter((d) => d.reason_category && d.description),
       manpower: manpower.filter((m) => m.trade),
       status: asDraft ? "DRAFT" : "DRAFT",
     });
@@ -232,6 +260,97 @@ export default function NewDailyLogPage() {
             placeholder="Describe any delays, weather impacts, or issues..."
             className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg resize-y focus:outline-none focus:ring-2 focus:ring-[#1B2A4A]/20 focus:border-[#1B2A4A]"
           />
+        </Card>
+
+        {/* Schedule Impact */}
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <CalendarClock className="h-4 w-4 text-[#2E75B6]" />
+              <h2 className="text-sm font-semibold text-gray-900">Schedule Impact</h2>
+            </div>
+            <button
+              onClick={addScheduleDelay}
+              className="flex items-center gap-1 text-sm text-[#1B2A4A] hover:underline"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Add Delay
+            </button>
+          </div>
+
+          {scheduleDelays.length === 0 ? (
+            <p className="text-sm text-gray-400 text-center py-4">
+              No schedule delays. Click &quot;Add Delay&quot; to log a schedule impact.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {scheduleDelays.map((entry, idx) => (
+                <div key={idx} className="p-3 border border-gray-200 rounded-lg space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-gray-500 uppercase">Delay #{idx + 1}</span>
+                    <button
+                      onClick={() => removeScheduleDelay(idx)}
+                      className="p-1 text-gray-400 hover:text-red-500"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Reason *</label>
+                      <select
+                        value={entry.reason_category}
+                        onChange={(e) => updateScheduleDelay(idx, "reason_category", e.target.value)}
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#1B2A4A]/20"
+                      >
+                        <option value="">Select reason...</option>
+                        {DELAY_REASONS.map((r) => (
+                          <option key={r} value={r}>{r.replace(/_/g, " ")}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Responsible Party *</label>
+                      <select
+                        value={entry.responsible_party}
+                        onChange={(e) => updateScheduleDelay(idx, "responsible_party", e.target.value)}
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#1B2A4A]/20"
+                      >
+                        <option value="">Select...</option>
+                        {RESPONSIBLE_PARTIES.map((p) => (
+                          <option key={p} value={p}>{p}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Days Delayed *</label>
+                      <input
+                        type="number"
+                        min={1}
+                        value={entry.delay_days || ""}
+                        onChange={(e) => updateScheduleDelay(idx, "delay_days", Number(e.target.value))}
+                        placeholder="1"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B2A4A]/20"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1">Description *</label>
+                    <input
+                      type="text"
+                      value={entry.description}
+                      onChange={(e) => updateScheduleDelay(idx, "description", e.target.value)}
+                      placeholder="Describe the schedule impact..."
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1B2A4A]/20"
+                    />
+                  </div>
+                </div>
+              ))}
+              <p className="text-xs text-gray-400">
+                Schedule delays will create pending delay records in the Schedule tool for approval.
+              </p>
+            </div>
+          )}
         </Card>
       </div>
     </div>

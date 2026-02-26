@@ -24,32 +24,60 @@ class Submittal(Base):
     created_by: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("users.id"), nullable=True
     )
+
+    # Numbering: base number + revision (e.g., 001.00, 001.01)
     number: Mapped[int] = mapped_column(Integer, nullable=False)
     revision: Mapped[int] = mapped_column(
         Integer, nullable=False, server_default=text("0")
     )
-    spec_section: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    submittal_type: Mapped[Optional[str]] = mapped_column(String(30), nullable=True)
+    parent_submittal_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("submittals.id"), nullable=True
+    )
+
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    reviewer_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("users.id"), nullable=True
+    spec_section: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    submittal_type: Mapped[Optional[str]] = mapped_column(
+        String(30), nullable=True, server_default=text("'SHOP_DRAWING'")
     )
+
+    # Parties
     submitted_by_sub_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True), ForeignKey("sub_companies.id"), nullable=True
     )
-    status: Mapped[str] = mapped_column(
-        String(30), nullable=False, server_default=text("'DRAFT'")
+    assigned_to: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=True
     )
-    due_date: Mapped[Optional[datetime]] = mapped_column(
-        TIMESTAMP(timezone=True), nullable=True
+
+    # Review
+    reviewer_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id"), nullable=True
     )
+    review_notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     reviewed_at: Mapped[Optional[datetime]] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+
+    # Metadata
+    due_date: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
+    drawing_reference: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    lead_time_days: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    cost_code_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
+
+    status: Mapped[str] = mapped_column(
+        String(30), nullable=False, server_default=text("'DRAFT'")
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()")
     )
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )

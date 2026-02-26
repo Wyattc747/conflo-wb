@@ -7,7 +7,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.daily_log import DailyLog
 from app.models.event_log import EventLog
-from app.schemas.daily_log import DailyLogCreate, DailyLogUpdate
+from app.models.schedule_delay import ScheduleDelay
+from app.schemas.daily_log import DailyLogCreate, DailyLogDelayEntry, DailyLogUpdate
+from app.services.schedule_service import DELAY_TIER_IMPACTS
 
 
 async def create_daily_log(
@@ -66,6 +68,14 @@ async def create_daily_log(
     db.add(event)
 
     await db.flush()
+
+    # Create linked ScheduleDelay records for each schedule impact entry
+    if data.schedule_delays:
+        for entry in data.schedule_delays:
+            await _create_schedule_delay_from_log(
+                db, daily_log, project_id, organization_id, user, entry,
+            )
+
     return daily_log
 
 
@@ -74,6 +84,38 @@ def _build_delays(delays_text: str | None) -> list:
     if not delays_text:
         return []
     return [{"description": delays_text}]
+
+
+async def _create_schedule_delay_from_log(
+    db,
+    daily_log: DailyLog,
+    project_id: uuid.UUID,
+    organization_id: uuid.UUID,
+    user: dict,
+    entry: DailyLogDelayEntry,
+) -> ScheduleDelay:
+    """Create a ScheduleDelay linked back to a daily log."""
+    impacts = DELAY_TIER_IMPACTS.get(
+        entry.reason_category, {"gc": True, "owner": False, "sub": True}
+    )
+    delay = ScheduleDelay(
+        organization_id=organization_id,
+        project_id=project_id,
+        task_ids=[str(tid) for tid in entry.task_ids],
+        delay_days=entry.delay_days,
+        reason_category=entry.reason_category,
+        responsible_party=entry.responsible_party,
+        description=entry.description,
+        impacts_gc_schedule=impacts["gc"],
+        impacts_owner_schedule=impacts["owner"],
+        impacts_sub_schedule=impacts["sub"],
+        daily_log_id=daily_log.id,
+        status="PENDING",
+        created_by=user["user_id"],
+    )
+    db.add(delay)
+    await db.flush()
+    return delay
 
 
 async def list_daily_logs(
@@ -232,7 +274,11 @@ async def delete_daily_log(
     await db.flush()
 
 
-def format_daily_log_response(log: DailyLog, created_by_name: str | None = None) -> dict:
+def format_daily_log_response(
+    log: DailyLog,
+    created_by_name: str | None = None,
+    schedule_delays: list | None = None,
+) -> dict:
     """Convert DailyLog ORM model to response dict."""
     weather = log.weather_data or {}
     log_date = log.log_date
@@ -252,6 +298,7 @@ def format_daily_log_response(log: DailyLog, created_by_name: str | None = None)
         "visitors": None,
         "safety_incidents": None,
         "delays_text": log.delays[0].get("description") if log.delays else None,
+        "schedule_delays": schedule_delays,
         "extra_work": None,
         "manpower": log.manpower,
         "status": log.status,

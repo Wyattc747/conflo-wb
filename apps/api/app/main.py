@@ -50,6 +50,11 @@ from app.routers.comments import gc_router as comments_gc_router, sub_router as 
 from app.routers.budget import router as budget_router
 from app.routers.pay_apps import gc_router as pay_apps_gc_router, sub_router as pay_apps_sub_router, owner_router as pay_apps_owner_router
 from app.routers.change_orders import gc_router as cos_gc_router, sub_router as cos_sub_router, owner_router as cos_owner_router
+from app.routers.submittals import gc_router as submittals_gc_router, sub_router as submittals_sub_router
+from app.routers.transmittals import gc_router as transmittals_gc_router
+from app.routers.punch_list import gc_router as punch_gc_router, sub_router as punch_sub_router, owner_router as punch_owner_router
+from app.routers.inspections import gc_router as inspections_gc_router, template_router as inspection_templates_router
+from app.routers.schedule import gc_router as schedule_gc_router, sub_router as schedule_sub_router, owner_router as schedule_owner_router
 
 app.include_router(projects_router)
 app.include_router(assignments_router)
@@ -70,3 +75,15 @@ app.include_router(pay_apps_owner_router)
 app.include_router(cos_gc_router)
 app.include_router(cos_sub_router)
 app.include_router(cos_owner_router)
+# Sprint 7
+app.include_router(submittals_gc_router)
+app.include_router(submittals_sub_router)
+app.include_router(transmittals_gc_router)
+app.include_router(punch_gc_router)
+app.include_router(punch_sub_router)
+app.include_router(punch_owner_router)
+app.include_router(inspection_templates_router)
+app.include_router(inspections_gc_router)
+app.include_router(schedule_gc_router)
+app.include_router(schedule_sub_router)
+app.include_router(schedule_owner_router)

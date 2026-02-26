@@ -7,6 +7,15 @@ from pydantic import BaseModel, ConfigDict
 from app.schemas.common import PaginationMeta
 
 
+class DailyLogDelayEntry(BaseModel):
+    """Structured schedule delay entry on a daily log."""
+    task_ids: list[UUID] = []
+    delay_days: int
+    reason_category: str  # WEATHER | OWNER_CHANGE | MATERIAL_DELIVERY | etc.
+    responsible_party: str  # GC | OWNER | SUB | OTHER
+    description: str
+
+
 class DailyLogCreate(BaseModel):
     log_date: date
     weather_condition: Optional[str] = None
@@ -24,6 +33,7 @@ class DailyLogCreate(BaseModel):
     delays: Optional[str] = None
     extra_work: Optional[str] = None
     manpower: Optional[list[dict]] = None
+    schedule_delays: Optional[list[DailyLogDelayEntry]] = None
     status: str = "DRAFT"
 
 
@@ -43,6 +53,7 @@ class DailyLogUpdate(BaseModel):
     delays: Optional[str] = None
     extra_work: Optional[str] = None
     manpower: Optional[list[dict]] = None
+    schedule_delays: Optional[list[DailyLogDelayEntry]] = None
 
 
 class DailyLogResponse(BaseModel):
@@ -60,6 +71,7 @@ class DailyLogResponse(BaseModel):
     visitors: Optional[list[dict]] = None
     safety_incidents: Optional[str] = None
     delays_text: Optional[str] = None
+    schedule_delays: Optional[list[dict]] = None
     extra_work: Optional[str] = None
     manpower: Optional[list[dict]] = None
     status: str

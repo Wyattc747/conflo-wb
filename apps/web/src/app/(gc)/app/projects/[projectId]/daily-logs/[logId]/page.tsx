@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { Cloud, Sun, CloudRain, Users, Clock, AlertTriangle } from "lucide-react";
+import { CalendarClock, Cloud, Sun, CloudRain, Users, Clock, AlertTriangle } from "lucide-react";
 import { DetailHeader } from "@/components/shared/DetailHeader";
 import { Card } from "@/components/shared/Card";
 import { CommentThread } from "@/components/shared/CommentThread";
@@ -17,6 +17,9 @@ const MOCK_LOG = {
   work_performed:
     "Poured concrete for footings on grid A-C. Steel erection continued on level 2. MEP rough-in ongoing in level 1. Waterproofing applied to north foundation wall.",
   delays_text: null,
+  schedule_delays: [
+    { delay_days: 1, reason_category: "WEATHER", responsible_party: "GC", description: "Morning rain delayed concrete pour by 1 hour", status: "PENDING" },
+  ],
   manpower: [
     { trade: "Concrete", workers: 8, hours: 64 },
     { trade: "Ironworkers", workers: 6, hours: 48 },
@@ -188,6 +191,43 @@ export default function DailyLogDetailPage() {
                 <h2 className="text-sm font-semibold text-gray-900">Delays & Issues</h2>
               </div>
               <p className="text-sm text-gray-700">{log.delays_text}</p>
+            </Card>
+          )}
+
+          {/* Schedule Impact */}
+          {log.schedule_delays && log.schedule_delays.length > 0 && (
+            <Card>
+              <div className="flex items-center gap-2 mb-3">
+                <CalendarClock className="h-4 w-4 text-[#2E75B6]" />
+                <h2 className="text-sm font-semibold text-gray-900">Schedule Impact</h2>
+              </div>
+              <div className="space-y-3">
+                {log.schedule_delays.map((delay: any, idx: number) => (
+                  <div key={idx} className="flex items-start justify-between p-3 bg-gray-50 rounded-lg">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold text-gray-500 uppercase">
+                          {delay.reason_category.replace(/_/g, " ")}
+                        </span>
+                        <span className="text-xs text-gray-400">|</span>
+                        <span className="text-xs text-gray-500">{delay.responsible_party}</span>
+                      </div>
+                      <p className="text-sm text-gray-700">{delay.description}</p>
+                    </div>
+                    <div className="flex items-center gap-2 ml-4 shrink-0">
+                      <span className="text-sm font-semibold text-red-600">+{delay.delay_days}d</span>
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                        delay.status === "PENDING" ? "bg-yellow-100 text-yellow-700" :
+                        delay.status === "APPROVED" ? "bg-green-100 text-green-700" :
+                        delay.status === "APPLIED" ? "bg-blue-100 text-blue-700" :
+                        "bg-gray-100 text-gray-600"
+                      }`}>
+                        {delay.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </Card>
           )}
         </div>

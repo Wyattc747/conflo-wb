@@ -28,37 +28,69 @@ class PunchListItem(Base):
     title: Mapped[str] = mapped_column(String, nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     location: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    trade: Mapped[Optional[str]] = mapped_column(String, nullable=True)
-    assigned_sub_company_id: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), ForeignKey("sub_companies.id"), nullable=True
+    category: Mapped[str] = mapped_column(
+        String(20), nullable=False, server_default=text("'DEFICIENCY'")
     )
+    trade: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     priority: Mapped[str] = mapped_column(
         String(20), nullable=False, server_default=text("'NORMAL'")
     )
+
+    # Assignment
+    assigned_sub_company_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("sub_companies.id"), nullable=True
+    )
+    assigned_to_user_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
+
+    # Metadata
+    due_date: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
+    cost_code_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
+    drawing_reference: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+
+    # Photos
     before_photo_ids: Mapped[list] = mapped_column(
         JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
     after_photo_ids: Mapped[list] = mapped_column(
         JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
-    status: Mapped[str] = mapped_column(
-        String(30), nullable=False, server_default=text("'OPEN'")
+    verification_photo_ids: Mapped[list] = mapped_column(
+        JSONB, nullable=False, server_default=text("'[]'::jsonb")
     )
-    due_date: Mapped[Optional[datetime]] = mapped_column(
-        TIMESTAMP(timezone=True), nullable=True
+
+    # Completion
+    completion_notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    completed_by: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
     )
     completed_at: Mapped[Optional[datetime]] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
+
+    # Verification
+    verification_notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    verified_by: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
     verified_at: Mapped[Optional[datetime]] = mapped_column(
         TIMESTAMP(timezone=True), nullable=True
     )
-    verified_by: Mapped[Optional[uuid.UUID]] = mapped_column(
-        UUID(as_uuid=True), nullable=True
+
+    status: Mapped[str] = mapped_column(
+        String(30), nullable=False, server_default=text("'OPEN'")
     )
     created_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()")
     )
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), server_default=text("now()"), onupdate=text("now()")
+    )
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
     )
