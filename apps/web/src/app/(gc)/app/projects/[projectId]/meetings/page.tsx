@@ -265,7 +265,7 @@ export default function MeetingsPage() {
         action={
           <button
             onClick={() => router.push(`/app/projects/${projectId}/meetings/new`)}
-            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <Plus className="h-4 w-4" />
             New Meeting
@@ -274,18 +274,18 @@ export default function MeetingsPage() {
       />
 
       {hasData && (
-        <div className="grid grid-cols-3 gap-4 mb-5">
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Total</div>
-            <div className="text-2xl font-bold text-gray-900 mt-1">{MOCK_MEETINGS.length}</div>
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-5">
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Total</div>
+            <div className="text-lg sm:text-2xl font-bold text-gray-900 mt-1">{MOCK_MEETINGS.length}</div>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Upcoming</div>
-            <div className="text-2xl font-bold text-blue-600 mt-1">{upcomingCount}</div>
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Upcoming</div>
+            <div className="text-lg sm:text-2xl font-bold text-blue-600 mt-1">{upcomingCount}</div>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Completed</div>
-            <div className="text-2xl font-bold text-green-600 mt-1">{completedCount}</div>
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Completed</div>
+            <div className="text-lg sm:text-2xl font-bold text-green-600 mt-1">{completedCount}</div>
           </div>
         </div>
       )}

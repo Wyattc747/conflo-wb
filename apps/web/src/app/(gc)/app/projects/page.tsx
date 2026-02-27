@@ -29,14 +29,14 @@ const MOCK_PROJECTS = [
 
 export default function ProjectsPage() {
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-3 sm:p-6 max-w-7xl mx-auto">
       <PageHeader
         title="Projects"
         subtitle="Manage all your construction projects"
         action={
           <Link
             href="/app/projects/new"
-            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <Plus className="h-4 w-4" />
             New Project
@@ -45,8 +45,8 @@ export default function ProjectsPage() {
       />
 
       {MOCK_PROJECTS.length > 0 ? (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <table className="w-full">
+        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden overflow-x-auto">
+          <table className="min-w-full">
             <thead>
               <tr className="border-b border-gray-200 bg-gray-50">
                 <th className="text-left px-4 py-3 text-xs uppercase tracking-wider text-gray-500 font-medium">
@@ -96,10 +96,10 @@ export default function ProjectsPage() {
           </table>
         </div>
       ) : (
-        <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-          <FolderOpen className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-base font-semibold text-gray-900 mb-1">No projects yet</h3>
-          <p className="text-sm text-gray-500 mb-4">Create your first project to get started.</p>
+        <div className="bg-white rounded-lg border border-gray-200 p-8 sm:p-12 text-center">
+          <FolderOpen className="h-10 w-10 sm:h-12 sm:w-12 text-gray-300 mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1">No projects yet</h3>
+          <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">Create your first project to get started.</p>
           <Link
             href="/app/projects/new"
             className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] inline-flex items-center gap-2"

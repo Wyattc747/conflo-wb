@@ -36,6 +36,7 @@ from app.models.cost_code_template import CostCodeTemplate
 from app.models.invitation import Invitation
 from app.models.integration_connection import IntegrationConnection
 from app.models.budget_line_item import BudgetLineItem
+from app.models.admin_user import AdminUser
 
 __all__ = [
     "Organization", "User", "Project", "ProjectAssignment",
@@ -46,5 +47,5 @@ __all__ = [
     "Drawing", "DrawingSheet", "Meeting", "Todo", "ProcurementItem",
     "Document", "DocumentFolder", "Comment", "File", "Photo", "Notification",
     "EventLog", "AuditLog", "CostCodeTemplate", "Invitation",
-    "IntegrationConnection", "BudgetLineItem",
+    "IntegrationConnection", "BudgetLineItem", "AdminUser",
 ]

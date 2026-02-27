@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/shared/EmptyState";
 
 export default function ContactsPage() {
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-3 sm:p-6 max-w-7xl mx-auto">
       <PageHeader
         title="Directory"
         subtitle="Manage your company contacts and external partners"

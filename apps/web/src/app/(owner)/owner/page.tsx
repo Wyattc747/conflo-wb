@@ -19,7 +19,7 @@ const MOCK_PROJECTS = [
 
 export default function OwnerProjectsPage() {
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-3 sm:p-6 max-w-5xl mx-auto">
       <PageHeader title="My Projects" subtitle="Projects shared with you" />
 
       {MOCK_PROJECTS.length > 0 ? (

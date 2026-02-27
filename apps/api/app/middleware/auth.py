@@ -21,6 +21,7 @@ PUBLIC_PATH_PREFIXES = (
     "/api/webhooks/",
     "/api/auth/signup",
     "/api/auth/invitations/",
+    "/api/admin/",
     "/docs",
     "/openapi.json",
     "/redoc",

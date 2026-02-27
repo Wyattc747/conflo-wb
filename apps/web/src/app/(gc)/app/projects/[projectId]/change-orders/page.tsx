@@ -153,7 +153,7 @@ export default function ChangeOrdersPage() {
         action={
           <button
             onClick={() => router.push(`/app/projects/${projectId}/change-orders/new`)}
-            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <Plus className="h-4 w-4" />
             New Change Order
@@ -164,18 +164,18 @@ export default function ChangeOrdersPage() {
       {hasData ? (
         <>
           {/* Summary bar */}
-          <div className="flex gap-4 mb-4">
-            <div className="bg-white rounded-lg border border-gray-200 px-4 py-3 flex-1">
-              <p className="text-xs text-gray-500 uppercase">Total Approved</p>
-              <p className="text-lg font-semibold text-green-700">{formatMoney(totalApproved)}</p>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4">
+            <div className="bg-white rounded-lg border border-gray-200 px-3 sm:px-4 py-2.5 sm:py-3">
+              <p className="text-[10px] sm:text-xs text-gray-500 uppercase">Total Approved</p>
+              <p className="text-base sm:text-lg font-semibold text-green-700">{formatMoney(totalApproved)}</p>
             </div>
-            <div className="bg-white rounded-lg border border-gray-200 px-4 py-3 flex-1">
-              <p className="text-xs text-gray-500 uppercase">Pending / In Progress</p>
-              <p className="text-lg font-semibold text-amber-700">{formatMoney(totalPending)}</p>
+            <div className="bg-white rounded-lg border border-gray-200 px-3 sm:px-4 py-2.5 sm:py-3">
+              <p className="text-[10px] sm:text-xs text-gray-500 uppercase">Pending</p>
+              <p className="text-base sm:text-lg font-semibold text-amber-700">{formatMoney(totalPending)}</p>
             </div>
-            <div className="bg-white rounded-lg border border-gray-200 px-4 py-3 flex-1">
-              <p className="text-xs text-gray-500 uppercase">Total COs</p>
-              <p className="text-lg font-semibold">{meta?.total ?? cos.length}</p>
+            <div className="bg-white rounded-lg border border-gray-200 px-3 sm:px-4 py-2.5 sm:py-3">
+              <p className="text-[10px] sm:text-xs text-gray-500 uppercase">Total COs</p>
+              <p className="text-base sm:text-lg font-semibold">{meta?.total ?? cos.length}</p>
             </div>
           </div>
 

@@ -33,7 +33,7 @@ export default function ProjectLayout({
           visibleTools={VISIBLE_TOOLS}
         />
         <div
-          className={`flex-1 p-6 min-h-[calc(100vh-56px)] transition-all pb-20 md:pb-6 ${
+          className={`flex-1 p-3 sm:p-6 min-h-[calc(100vh-56px)] transition-all pb-20 md:pb-6 ${
             collapsed ? "md:ml-10" : "md:ml-[180px]"
           }`}
         >

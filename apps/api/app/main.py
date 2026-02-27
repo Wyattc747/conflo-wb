@@ -31,10 +31,14 @@ async def health_check():
     return {"status": "healthy", "service": "conflo-api"}
 
 
-# Auth middleware
+# Middleware (order matters — outermost first, innermost last)
+from app.middleware.request_timing import RequestTimingMiddleware
 from app.middleware.auth import AuthMiddleware
+from app.middleware.event_logging import EventLoggingMiddleware
 
+app.add_middleware(RequestTimingMiddleware)
 app.add_middleware(AuthMiddleware)
+app.add_middleware(EventLoggingMiddleware)
 
 # Router registration
 from app.routers.projects import router as projects_router
@@ -67,6 +71,10 @@ from app.routers.bids import gc_router as bids_gc_router, sub_router as bids_sub
 from app.routers.files import gc_router as files_gc_router, sub_router as files_sub_router, owner_router as files_owner_router
 from app.routers.integrations import gc_router as integrations_gc_router
 from app.routers.notifications import gc_router as notifications_gc_router, sub_router as notifications_sub_router, owner_router as notifications_owner_router
+# Benchmarks
+from app.routers.benchmarks import gc_router as benchmarks_gc_router
+# Admin portal
+from app.routers.admin import router as admin_router
 
 app.include_router(projects_router)
 app.include_router(assignments_router)
@@ -121,3 +129,7 @@ app.include_router(integrations_gc_router)
 app.include_router(notifications_gc_router)
 app.include_router(notifications_sub_router)
 app.include_router(notifications_owner_router)
+# Benchmarks
+app.include_router(benchmarks_gc_router)
+# Admin portal
+app.include_router(admin_router)

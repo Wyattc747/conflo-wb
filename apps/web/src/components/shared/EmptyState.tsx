@@ -8,10 +8,10 @@ interface EmptyStateProps {
 
 export function EmptyState({ icon: Icon, title, description, actionLabel, onAction }: EmptyStateProps) {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-      <Icon className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-      <h3 className="text-base font-semibold text-gray-900 mb-1">{title}</h3>
-      <p className="text-sm text-gray-500 mb-4">{description}</p>
+    <div className="bg-white rounded-lg border border-gray-200 p-8 sm:p-12 text-center">
+      <Icon className="h-10 w-10 sm:h-12 sm:w-12 text-gray-300 mx-auto mb-3 sm:mb-4" />
+      <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1">{title}</h3>
+      <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{description}</p>
       {actionLabel && onAction && (
         <button
           onClick={onAction}

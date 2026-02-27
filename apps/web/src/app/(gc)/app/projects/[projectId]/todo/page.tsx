@@ -226,11 +226,11 @@ export default function TasksPage() {
         title="Tasks"
         subtitle="Manage and assign project tasks"
         action={
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
             {hasData && <ViewToggle view={view} onViewChange={setView} />}
             <button
               onClick={() => router.push(`/app/projects/${projectId}/todo/new`)}
-              className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+              className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 flex-1 sm:flex-none justify-center"
             >
               <Plus className="h-4 w-4" />
               New Task
@@ -240,18 +240,18 @@ export default function TasksPage() {
       />
 
       {hasData && (
-        <div className="grid grid-cols-3 gap-4 mb-5">
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">To Do</div>
-            <div className="text-2xl font-bold text-blue-600 mt-1">{openCount}</div>
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-5">
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">To Do</div>
+            <div className="text-lg sm:text-2xl font-bold text-blue-600 mt-1">{openCount}</div>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">In Progress</div>
-            <div className="text-2xl font-bold text-yellow-600 mt-1">{inProgressCount}</div>
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">In Progress</div>
+            <div className="text-lg sm:text-2xl font-bold text-yellow-600 mt-1">{inProgressCount}</div>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Completed</div>
-            <div className="text-2xl font-bold text-green-600 mt-1">{completedCount}</div>
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Completed</div>
+            <div className="text-lg sm:text-2xl font-bold text-green-600 mt-1">{completedCount}</div>
           </div>
         </div>
       )}

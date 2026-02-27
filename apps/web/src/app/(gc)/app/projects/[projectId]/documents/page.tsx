@@ -218,7 +218,7 @@ export default function DocumentsPage() {
         action={
           <button
             onClick={() => router.push(`/app/projects/${projectId}/documents/upload`)}
-            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <Plus className="h-4 w-4" />
             Upload Document
@@ -227,8 +227,8 @@ export default function DocumentsPage() {
       />
 
       {hasData ? (
-        <div className="flex gap-6">
-          <div className="w-56 flex-shrink-0">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+          <div className="w-full md:w-56 flex-shrink-0">
             <div className="bg-white rounded-lg border border-gray-200 p-3">
               <FolderTree
                 folders={MOCK_FOLDERS}

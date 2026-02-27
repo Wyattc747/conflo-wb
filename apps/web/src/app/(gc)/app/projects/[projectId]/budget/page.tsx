@@ -19,9 +19,9 @@ function SummaryCard({ label, amount, variant }: { label: string; amount: number
     warning: "text-amber-700",
   };
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4">
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">{label}</p>
-      <p className={`text-lg font-semibold mt-1 ${colorMap[variant || "default"]}`}>{formatMoney(amount)}</p>
+    <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+      <p className="text-[10px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider">{label}</p>
+      <p className={`text-sm sm:text-lg font-semibold mt-1 ${colorMap[variant || "default"]}`}>{formatMoney(amount)}</p>
     </div>
   );
 }
@@ -42,8 +42,8 @@ function AddLineItemModal({ onClose, onSubmit, isLoading }: { onClose: () => voi
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-white rounded-lg border border-gray-200 p-6 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50" onClick={onClose}>
+      <div className="bg-white rounded-t-lg sm:rounded-lg border border-gray-200 p-4 sm:p-6 w-full sm:max-w-md" onClick={(e) => e.stopPropagation()}>
         <h3 className="text-lg font-semibold mb-4">Add Budget Line Item</h3>
         {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
         <div className="space-y-4">
@@ -209,14 +209,14 @@ export default function BudgetPage() {
         title="Budget"
         subtitle="Track project costs and budget"
         action={
-          <div className="flex items-center gap-2">
-            <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2 flex-1 sm:flex-none justify-center">
               <Upload className="h-4 w-4" />
               Import
             </button>
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+              className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 flex-1 sm:flex-none justify-center"
             >
               <Plus className="h-4 w-4" />
               Add Line Item
@@ -228,7 +228,7 @@ export default function BudgetPage() {
       {hasData && summary ? (
         <>
           {/* Summary Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 mb-4 sm:mb-6">
             <SummaryCard label="Original Budget" amount={summary.original_contract} />
             <SummaryCard label="Approved Changes" amount={summary.approved_changes} variant={summary.approved_changes > 0 ? "negative" : "default"} />
             <SummaryCard label="Revised Budget" amount={summary.revised_contract} />
@@ -267,14 +267,16 @@ export default function BudgetPage() {
           />
 
           {/* Totals Row */}
-          <div className="bg-gray-50 border border-t-0 border-gray-200 rounded-b-lg px-4 py-3 flex items-center text-sm font-semibold">
-            <span className="flex-1">Totals</span>
-            <span className="w-28 text-right">{formatMoney(summary.original_contract)}</span>
-            <span className="w-28 text-right">{formatMoney(summary.approved_changes)}</span>
-            <span className="w-28 text-right">{formatMoney(summary.revised_contract)}</span>
-            <span className="w-28 text-right">{formatMoney(summary.billed_to_date)}</span>
-            <span className="w-28 text-right">{formatMoney(summary.remaining)}</span>
-            <span className="w-32 text-right">{formatPercent(summary.percent_complete)}</span>
+          <div className="bg-gray-50 border border-t-0 border-gray-200 rounded-b-lg px-3 sm:px-4 py-2.5 sm:py-3 overflow-x-auto">
+            <div className="flex items-center text-xs sm:text-sm font-semibold min-w-[600px]">
+              <span className="flex-1">Totals</span>
+              <span className="w-28 text-right">{formatMoney(summary.original_contract)}</span>
+              <span className="w-28 text-right">{formatMoney(summary.approved_changes)}</span>
+              <span className="w-28 text-right">{formatMoney(summary.revised_contract)}</span>
+              <span className="w-28 text-right">{formatMoney(summary.billed_to_date)}</span>
+              <span className="w-28 text-right">{formatMoney(summary.remaining)}</span>
+              <span className="w-32 text-right">{formatPercent(summary.percent_complete)}</span>
+            </div>
           </div>
         </>
       ) : (

@@ -185,18 +185,18 @@ export default function SubBidsPage() {
       <PageHeader title="Bids" subtitle="View and respond to bid invitations" />
 
       {hasData && (
-        <div className="grid grid-cols-3 gap-4 mb-5">
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Total Invitations</div>
-            <div className="text-2xl font-bold text-gray-900 mt-1">{MOCK_BID_PACKAGES.length}</div>
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-5">
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Total Invitations</div>
+            <div className="text-lg sm:text-2xl font-bold text-gray-900 mt-1">{MOCK_BID_PACKAGES.length}</div>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Active</div>
-            <div className="text-2xl font-bold text-blue-600 mt-1">{activeCount}</div>
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Active</div>
+            <div className="text-lg sm:text-2xl font-bold text-blue-600 mt-1">{activeCount}</div>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 p-4">
-            <div className="text-xs text-gray-500 uppercase tracking-wide">Awarded</div>
-            <div className="text-2xl font-bold text-green-600 mt-1">
+          <div className="bg-white rounded-lg border border-gray-200 p-3 sm:p-4">
+            <div className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide">Awarded</div>
+            <div className="text-lg sm:text-2xl font-bold text-green-600 mt-1">
               {MOCK_BID_PACKAGES.filter((b) => b.status === "AWARDED").length}
             </div>
           </div>

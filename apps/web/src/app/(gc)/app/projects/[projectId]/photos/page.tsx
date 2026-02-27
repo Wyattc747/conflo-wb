@@ -117,7 +117,7 @@ export default function PhotosPage() {
         action={
           <button
             onClick={() => console.log("upload photo")}
-            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <Plus className="h-4 w-4" />
             Upload Photos
@@ -160,31 +160,31 @@ export default function PhotosPage() {
           {/* Photo details list below gallery */}
           <div className="mt-6 space-y-2">
             {filtered.map((photo) => (
-              <div key={photo.id} className="flex items-center gap-4 p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50">
-                <div className="w-12 h-12 rounded bg-gray-200 flex items-center justify-center flex-shrink-0">
-                  <Camera className="h-5 w-5 text-gray-400" />
+              <div key={photo.id} className="flex items-center gap-3 sm:gap-4 p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded bg-gray-200 flex items-center justify-center flex-shrink-0">
+                  <Camera className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{photo.caption || "Untitled"}</p>
-                  <div className="flex items-center gap-3 mt-0.5">
+                  <p className="text-xs sm:text-sm font-medium truncate">{photo.caption || "Untitled"}</p>
+                  <div className="flex items-center gap-2 sm:gap-3 mt-0.5">
                     {photo.location && (
-                      <span className="text-xs text-gray-500 flex items-center gap-0.5">
-                        <MapPin className="h-3 w-3" />{photo.location}
+                      <span className="text-[10px] sm:text-xs text-gray-500 flex items-center gap-0.5 truncate">
+                        <MapPin className="h-3 w-3 flex-shrink-0" />{photo.location}
                       </span>
                     )}
-                    <span className="text-xs text-gray-400">
+                    <span className="text-[10px] sm:text-xs text-gray-400 flex-shrink-0">
                       {new Date(photo.created_at).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="hidden sm:flex items-center gap-1">
                   {photo.tags.slice(0, 2).map((tag) => (
                     <span key={tag} className="px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded text-[10px]">
                       {tag}
                     </span>
                   ))}
                 </div>
-                <span className="text-xs text-gray-400">{photo.uploaded_by_name}</span>
+                <span className="hidden md:inline text-xs text-gray-400">{photo.uploaded_by_name}</span>
               </div>
             ))}
           </div>

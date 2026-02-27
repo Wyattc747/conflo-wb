@@ -40,13 +40,13 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="min-w-full">
           <thead>
             <tr className="border-b border-gray-200 bg-gray-50">
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
+                  className={`px-3 sm:px-4 py-2.5 sm:py-3 text-left text-[11px] sm:text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap ${
                     col.sortable ? "cursor-pointer select-none hover:text-gray-700" : ""
                   } ${col.className || ""}`}
                   onClick={() => col.sortable && onSort?.(col.key)}
@@ -68,13 +68,13 @@ export function DataTable<T extends Record<string, any>>({
           <tbody className="divide-y divide-gray-100">
             {loading ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-12 text-center text-sm text-gray-400">
+                <td colSpan={columns.length} className="px-3 sm:px-4 py-12 text-center text-xs sm:text-sm text-gray-400">
                   Loading...
                 </td>
               </tr>
             ) : data.length === 0 ? (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-12 text-center text-sm text-gray-400">
+                <td colSpan={columns.length} className="px-3 sm:px-4 py-12 text-center text-xs sm:text-sm text-gray-400">
                   No results found
                 </td>
               </tr>
@@ -86,7 +86,7 @@ export function DataTable<T extends Record<string, any>>({
                   onClick={() => onRowClick?.(row)}
                 >
                   {columns.map((col) => (
-                    <td key={col.key} className={`px-4 py-3 text-sm text-gray-700 ${col.className || ""}`}>
+                    <td key={col.key} className={`px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm text-gray-700 ${col.className || ""}`}>
                       {col.render ? col.render(row) : row[col.key]}
                     </td>
                   ))}
@@ -99,8 +99,8 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-gray-50">
-          <p className="text-sm text-gray-500">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 border-t border-gray-200 bg-gray-50">
+          <p className="text-xs sm:text-sm text-gray-500">
             Page {page} of {totalPages} ({total} total)
           </p>
           <div className="flex items-center gap-1">

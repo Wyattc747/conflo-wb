@@ -218,7 +218,7 @@ export default function BidPackagesPage() {
         action={
           <button
             onClick={() => router.push(`/app/projects/${projectId}/bid-packages/new`)}
-            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2"
+            className="bg-[#1B2A4A] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#243558] flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             <Plus className="h-4 w-4" />
             New Bid Package
