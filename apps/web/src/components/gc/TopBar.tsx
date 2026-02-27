@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { useAuth } from "@clerk/nextjs";
 import { useMobileMenuStore } from "@/stores/ui-store";
+import { NotificationBell } from "@/components/shared/NotificationBell";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/app/dashboard" },
@@ -14,6 +16,7 @@ const NAV_ITEMS = [
 export function TopBar() {
   const pathname = usePathname();
   const { open: mobileMenuOpen, toggle: toggleMobileMenu } = useMobileMenuStore();
+  const { getToken } = useAuth();
 
   return (
     <header className="h-14 bg-black flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-50">
@@ -52,12 +55,7 @@ export function TopBar() {
 
       {/* Right: Notifications + Avatar + Mobile hamburger */}
       <div className="flex items-center gap-4">
-        <Link
-          href="/app/notifications"
-          className="text-white hover:text-yellow-300 relative"
-        >
-          <Bell className="h-5 w-5" />
-        </Link>
+        <NotificationBellWrapper />
 
         {/* Avatar placeholder */}
         <div className="h-8 w-8 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-medium">
@@ -75,3 +73,24 @@ export function TopBar() {
     </header>
   );
 }
+
+function NotificationBellWrapper() {
+  const { getToken } = useAuth();
+  const [token, setToken] = useState<string | null>(null);
+
+  // Lazy-load token
+  if (!token) {
+    getToken().then(setToken);
+  }
+
+  return (
+    <NotificationBell
+      token={token}
+      portalPrefix="/api/gc"
+      routePrefix="/app"
+    />
+  );
+}
+
+// Need useState import
+import { useState } from "react";

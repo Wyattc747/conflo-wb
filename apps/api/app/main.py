@@ -63,6 +63,10 @@ from app.routers.drawings import gc_router as drawings_gc_router, sub_router as 
 from app.routers.documents import gc_router as documents_gc_router, sub_router as documents_sub_router
 from app.routers.photos import gc_router as photos_gc_router, sub_router as photos_sub_router
 from app.routers.bids import gc_router as bids_gc_router, sub_router as bids_sub_router
+# Sprint 9
+from app.routers.files import gc_router as files_gc_router, sub_router as files_sub_router, owner_router as files_owner_router
+from app.routers.integrations import gc_router as integrations_gc_router
+from app.routers.notifications import gc_router as notifications_gc_router, sub_router as notifications_sub_router, owner_router as notifications_owner_router
 
 app.include_router(projects_router)
 app.include_router(assignments_router)
@@ -109,3 +113,11 @@ app.include_router(photos_gc_router)
 app.include_router(photos_sub_router)
 app.include_router(bids_gc_router)
 app.include_router(bids_sub_router)
+# Sprint 9
+app.include_router(files_gc_router)
+app.include_router(files_sub_router)
+app.include_router(files_owner_router)
+app.include_router(integrations_gc_router)
+app.include_router(notifications_gc_router)
+app.include_router(notifications_sub_router)
+app.include_router(notifications_owner_router)

@@ -13,6 +13,25 @@ from app.schemas.meeting import MeetingCreate, MeetingUpdate, PublishMinutesRequ
 from app.services.numbering_service import format_number, get_next_number
 
 
+async def _sync_meeting_to_calendars(db: AsyncSession, meeting: Meeting, user: dict):
+    """Sync meeting to whichever calendars the user has connected."""
+    try:
+        from app.integrations.google_calendar import get_google_connection, sync_meeting_to_google
+        conn = await get_google_connection(db, user["user_id"])
+        if conn:
+            await sync_meeting_to_google(db, meeting, user)
+    except Exception:
+        pass  # Calendar sync is non-critical
+
+    try:
+        from app.integrations.microsoft_graph import get_microsoft_token, sync_meeting_to_outlook
+        token = await get_microsoft_token(db, user["user_id"])
+        if token:
+            await sync_meeting_to_outlook(db, meeting, user)
+    except Exception:
+        pass
+
+
 async def create_meeting(
     db: AsyncSession,
     project_id: uuid.UUID,
@@ -55,6 +74,10 @@ async def create_meeting(
     db.add(event)
 
     await db.flush()
+
+    # Sync to connected calendars
+    await _sync_meeting_to_calendars(db, meeting, user)
+
     return meeting
 
 

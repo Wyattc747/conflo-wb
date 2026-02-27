@@ -18,9 +18,19 @@ class IntegrationConnection(Base):
     organization_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=False
     )
+    user_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True), nullable=True
+    )
     provider: Mapped[str] = mapped_column(String(50), nullable=False)
     access_token_enc: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     refresh_token_enc: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    token_expiry: Mapped[Optional[datetime]] = mapped_column(
+        TIMESTAMP(timezone=True), nullable=True
+    )
+    scopes: Mapped[Optional[list]] = mapped_column(JSONB, nullable=True)
+    provider_metadata: Mapped[dict] = mapped_column(
+        JSONB, nullable=False, server_default=text("'{}'::jsonb")
+    )
     config: Mapped[dict] = mapped_column(
         JSONB, nullable=False, server_default=text("'{}'::jsonb")
     )
